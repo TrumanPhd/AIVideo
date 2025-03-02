@@ -1,0 +1,18 @@
+# Setting
+# ---- 配置参数 ----
+VIDEO_SAVE_PATH = "/Users/truman/AIGC/Video"
+MUSIC_LIBRARY_PATH = "/Users/truman/AIGC/MusicLibrary"
+YOUTUBE_ACCOUNT = "@VideoAIGC"
+TIKTOK_ACCOUNT = "@videoaigc"
+PIKA_MODEL = "Pika"
+PIKA_API_ENDPOINT = "YOUR_PIKA_API_ENDPOINT"
+YOUTUBE_API_ENDPOINT = "https://www.googleapis.com/youtube/v3"
+TIKTOK_API_ENDPOINT = "YOUR_TIKTOK_API_ENDPOINT"
+YOUTUBE_API_KEY = "AIzaSyByW3Pxi3_yw4h0Un293iGC4XBBbEYgEE4"
+TIKTOK_API_KEY = "YOUR_TIKTOK_API_KEY"
+VIDEO_ANALYSIS_API_ENDPOINT = "YOUR_VIDEO_ANALYSIS_API_ENDPOINT"  # 替换为你的视频分析 API endpoint
+VIDEO_ANALYSIS_API_KEY = "YOUR_VIDEO_ANALYSIS_API_KEY"  # 替换为你的视频分析 API key
+
+# ---- 配置参数 ----
+KLING_AI_API_ENDPOINT = "https://api.klingai.com"  # 替换为你的 Kling AI API endpoint
+VIDEO_SAVE_PATH = "/Users/truman/AIGC/Video"
