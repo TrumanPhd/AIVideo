@@ -1,114 +1,114 @@
-[English](README_en.md) | [回到主页](README.md)
+[中文](README_zh.md) | [Back to Main](README.md)
 
-# 🎬 AI 视频生产与自动发布框架
+# 🎬 AI Video Production & Automated Publishing Framework
 
-这个仓库包含了一套全自动的 AI 视频生产、以及自动在公众号等平台发布的脚本实现。
+This repository contains a set of scripts for fully automating the AI video production process, from generating video prompts and the videos themselves, to adding background music and automatically publishing them on platforms like YouTube, TikTok, etc.
 
-本项目旨在探索并实现一个可扩展的、由 AI 驱动的内容创作完整流水线。
+This project aims to explore and implement a complete pipeline for scalable AI-driven content creation.
 
-## 🚀 项目目标
+## 🚀 Project Goals
 
-*   利用 AI 模型自动化整个视频生产工作流。
-*   基于文本提示词生成富有创意和想象力的视频内容。
-*   自动选择并添加合适的背景音乐。
-*   简化向多个短视频平台的发布流程。
+*   Automate the entire video production workflow using AI models.
+*   Generate creative and imaginative video content based on text prompts.
+*   Automatically select and add suitable background music.
+*   Streamline the publishing process to multiple short video platforms.
 
-## ✨ 主要功能
+## ✨ Key Features
 
-*   **基于 LLM 的提示词生成：** 利用语言模型（如智谱 GLM-4）创建多样化且引人入胜的视频提示词。
-*   **AI 视频生成：** 集成多种文本到视频 (T2V) 和图像到视频 (I2V) 模型（如 Pika、可灵等）。
-*   **自动音乐匹配：** 根据视频内容或提示词，从本地音乐库中匹配背景音乐。
-*   **多平台发布：** 用于自动上传到 YouTube、TikTok 等平台的脚本。
-*   **结构化输出：** 组织良好的视频存储，采用清晰的命名规则。
+*   **LLM-based Prompt Generation:** Utilizes language models (like Zhipu GLM-4) to create diverse and engaging video prompts.
+*   **AI Video Generation:** Integrates with various Text-to-Video (T2V) and Image-to-Video (I2V) models (Pika, Keling, etc.).
+*   **Automated Music Matching:** Matches background music from a local library based on video content or prompts.
+*   **Multi-platform Publishing:** Scripts for automated uploading to platforms like YouTube and TikTok.
+*   **Structured Output:** Organized video storage with clear naming conventions.
 
-## 💡 项目思路与实施细节
+## 💡 Project Ideas & Implementation Details
 
-下面是在做这个项目时的一些思路和详细的实施计划：
+Here are some of the thoughts behind building this project:
 
-**1. 总流程**
-大型语言模型（LLM）生成视频提示 -> 视频生成模型 -> 本地背景音乐匹配（基于文本提示词）-> 发布
-macbook -> LLM服务器获取提示词 (TP) -> macbook -> 将 TP 发送给 T2V 模型 -> 下载视频到 macbook -> 本地音乐库搜索匹配音频 -> 合成对应视频 -> 视频本地存储并发布到多平台。
+**1. Overall Process**
+LLM Generates Video Prompt -> Video Generation Model -> Local Background Music Matching (based on text prompt) -> Publishing
+macbook -> Get TP from LLM Server -> macbook -> Send TP to T2V Model -> Download video to macbook -> Search local library for corresponding audio -> Match and synthesize corresponding video -> Local video storage & publish to multiple platforms.
 
-**2. 注册部署**
-*   **Tiktok 抖音 (西瓜视频抖音系)** 需要管理员权限审核。
-*   **Bilibili** 需要认证。
-*   **Youtube** 已经跑通。
-*   **快手**
-*   中文平台的视频题目要做汉化。
+**2. Registration and Deployment**
+*   **Tiktok / Douyin (ByteDance ecosystem including Xigua Video)** Requires administrator approval.
+*   **Bilibili** Requires verification.
+*   **Youtube** Already working.
+*   **Kuaishou**
+*   Video titles for Chinese platforms need localization.
 
-2.1 **text2video：** 生成一些现实中没有的脑洞镜头。
-*   **效果验证**
-    *   调用智谱 GLM API 生成语义提示词。
-    *   调用生成视频：
-        1.  脑洞大开视频 结合一些网络热梗。
+2.1 **text2video:** Generate imaginative scenes that don't exist in reality.
+*   **Effect Validation**
+    *   Call Zhipu GLM API to generate semantic prompts.
+    *   Call to generate videos:
+        1.  Highly imaginative videos combining popular online memes.
 
-2.2 **image2video：**
-1.  **视频类型：（可以通过邮箱多注册几个账号试试）**
-    1.  擦边类：大尺度真实美女、动漫美女，微动作 - 跳舞。有的模型会拒绝生成。
-    2.  打架、功夫。
-    3.  TP -> 扩散模型 -> 视频。
-    4.  历史进步类？
-    5.  脑洞大开类？
-    6.  真实的变成虚幻的场景虚构。
+2.2 **image2video:**
+1.  **Video Types: (Can register multiple accounts using different emails)**
+    1.  Suggestive content: Large-scale real beauties, anime beauties, micro-movements - dancing. Some models may refuse to generate these.
+    2.  Fighting, Kung Fu.
+    3.  TP -> Diffusion model -> Video.
+    4.  Historical progress type?
+    5.  Highly imaginative type?
+    6.  Real scenes transformed into imaginary virtual scenes.
 
-**3. 实施方案**
-*   **要求：** 编写 Python 脚本，添加中文注释，在 mac 环境中运行。从视频生成到发布的**全流程自动化**。文本提示调用语言模型 API，视频调用模型采用云端生成。
-*   **调用语言模型自动生成 text prompt：** 要求大开脑洞、有天马行空的想象。要发布到短视频平台，必须能吸引订阅和点赞。视频平台的视频封面通常是视频的第一帧。
-*   **路径参数要求：**
-    *   将生成的视频保存在 `/Users/truman/AIGC/Video` 文件夹下。
-    *   命名规则：以 `V` + 日期 + 代码命名（例：`V20251230000001`）。
-*   **视频自动发布平台：**
-    *   Youtube `@VideoAIGC` 账号。
-    *   Tiktok `@videoaigc` 账号。
-*   **模型调用：** Pika 系列模型。
-*   **视频内容的提示词生成：** 通过智谱 GLM-4 生成。
-*   **背景音乐：** 在将生成的视频下载之后自动添加背景音乐。
+**3. Implementation Plan**
+*   **Requirements:** Write Python scripts, add Chinese comments, run in a mac environment. Automate the **entire process** from video generation to publishing. Text prompts call language model API, video generation models are cloud-based.
+*   **Call Language Model to Automatically Generate text prompt:** Requires being highly creative and imaginative, with wild ideas. To be published on short video platforms, they must be able to attract subscriptions and likes. The video thumbnail on video platforms is usually the first frame of the video.
+*   **Path Parameter Requirements:**
+    *   Save generated videos in the `/Users/truman/AIGC/Video` folder.
+    *   Naming rule: `V` + Date + Code (Example: `V20251230000001`).
+*   **Automatic Video Publishing Platforms:**
+    *   Youtube `@VideoAIGC` account.
+    *   Tiktok `@videoaigc` account.
+*   **Model Call:** Pika series models.
+*   **Video Content Prompt Generation:** Generated via Zhipu GLM-4.
+*   **Background Music:** Automatically add background music after downloading the generated video.
 
-**4. 构建背景音乐库**
-*   **5秒的背景音乐库：** 按照情感分类。
-*   **10秒的库：** 以后再做。
+**4. Build Background Music Library**
+*   **5-second Background Music Library:** Categorized by emotion.
+*   **10-second Library:** To be done later.
 
-**5. 视频生成模型**
-*   基本都能直接 T2V，有些可以添加 Image 的提示来完善效果。
-*   **主力：**
-    *   **Pika 系列:** 0.5秒。推荐。I2V、T2V、I+T2V。次便宜推荐，易于部署。
-    *   **可灵:** 1.6。推荐。提供 T2V、T+(1-4个)I2V 多种接口。只用5秒。最便宜。使用国内手机登录。API 访问贵。
-*   **备用：**
-    *   **Runway Gen-3:** 质量最高（Gen-2 受到训练数据影响有西方偏见）。5人民币一个视频太贵，不推荐。
-    *   **T2V: 腾讯混元 (Hunyuan):** https://aivideo.hunyuan.tencent.com/。以横版为主，生成的竖版像两个横版的拼接。画质仍需提升，动作幅度有待考量。API: https://cloud.tencent.com/document/product/1729。5秒。没有 API 调用接口。
-    *   **I2V、T2V (T2I2V): Stable Video Diffusion:** 只有4秒。大尺度容易拒绝生成，不推荐。https://www.stablevideo.com/generate。
-    *   **T2V: Meta MovieGen:** 尚未对大众开放，以后试试。
-    *   **T2V: Google Veo2:** 尚未对大众开放，以后试试。
-    *   **T2V: Sora V2:** 20/200美元，与 GPT 捆绑销售。Tier 1。但效果不是最好，性价比不高。可以试试。
-    *   **T2V: ModelScope Text to Video:** 清晰度不行，太弱了，凑合用的水平，23年的老免费模型。
+**5. Video Generation Models**
+*   Most can directly do T2V. Some allow adding Image prompts to improve effects.
+*   **Main:**
+    *   **Pika Series:** 0.5 seconds. Recommended. I2V, T2V, I+T2V. Second cheapest recommended, easy to deploy.
+    *   **Keling:** 1.6. Recommended. Provides T2V, T+(1-4)I2V multiple interfaces. Only use 5 seconds. Cheapest. Requires domestic mobile phone login. API access is expensive.
+*   **Backup:**
+    *   **Runway Gen-3:** Highest quality (Gen-2 has Western bias due to training data). 5 RMB per video is too expensive, not recommended.
+    *   **T2V: Tencent Hunyuan:** https://aivideo.hunyuan.tencent.com/. Primarily horizontal, generated vertical videos look like two horizontal ones stitched together. Picture quality needs improvement, action range needs consideration. API: https://cloud.tencent.com/document/product/1729. 5 seconds. No API call interface.
+    *   **I2V, T2V (T2I2V): Stable Video Diffusion:** Only 4 seconds. Easily refuses to generate large-scale content, not recommended. https://www.stablevideo.com/generate.
+    *   **T2V: Meta MovieGen:** Not yet publicly available, will try later.
+    *   **T2V: Google Veo2:** Not yet publicly available, will try later.
+    *   **T2V: Sora V2:** 20/200$, bundled with GPT, Tier 1. But not the best effect, not cost-effective. Can try.
+    *   **T2V: ModelScope Text to Video:** Clarity is not good, too weak, barely usable, old free model from 23 years ago.
 
-## ⚠️ 技术现状与注意
+## ⚠️ Technical Notes & Considerations
 
-1) 有些比较偏的场景会出现不一致性。
-2) **用英文做提示词！**
-3) 老模型做真实（real）风格的能力不行，尽量使用卡通（Cartoon）风格。
-4) 图片提示时，有些模型会因为擦边图片、大尺度而拒绝生成。
-5) 当有 5秒和 10秒可选时，都用 5秒。现在的模型生成的 10秒视频都太空洞。
+1) Inconsistencies may occur in certain niche scenes.
+2) **Use English for prompt words!**
+3) Older models are not good at generating realistic content. Try to use Cartoon style.
+4) When using image prompts, some models will refuse to generate suggestive or large-scale content.
+5) When 5 seconds and 10 seconds are optional, always use 5 seconds. Current models' 10-second videos are too empty.
 
-## 🛠️ 环境要求
+## 🛠️ Requirements
 
-*   Python 环境
-*   macOS 操作系统 (脚本当前设计为在 mac 环境下运行)
-*   相关 AI 模型 API 访问权限 (例如，智谱 GLM、Pika API、可灵 API)
-*   目标发布平台的账号 (Youtube, TikTok)，并具备必要的发布权限。
+*   Python environment
+*   macOS operating system (scripts are currently designed for mac)
+*   Access to relevant AI model APIs (e.g., Zhipu GLM, Pika API, Keling API)
+*   Accounts for target publishing platforms (Youtube, TikTok) with necessary permissions.
 
-## ⚙️ 设置与使用
+## ⚙️ Setup and Usage
 
-*(在此添加中文设置说明)*
+*(Add English setup instructions here)*
 
-## 📂 仓库结构
+## 📂 Repository Structure
 
-*(在此列出你的实际目录和重要文件，使用中文)*
+*(List your actual directories and important files here in English)*
 
-## 📜 许可证
+## 📜 License
 
-*(在此添加你选择的许可证)*
+*(Add your chosen license here)*
 
-## 👋 贡献
+## 👋 Contributing
 
-欢迎贡献！请随时提出 issue 或提交 pull request。
+Contributions are welcome! Please feel free to open issues or submit pull requests.
